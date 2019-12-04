@@ -1,0 +1,75 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'AmericanTypewriter-Light', serif;
+}
+
+body {
+	text-align: center;
+	color: #333;
+}
+
+h1 {
+	margin: 1em auto;
+	font-weight: 100;
+}
+
+h2 {
+	font-family: AmericanTypewriter, serif;
+	font-family: 'AmericanTypewriter-Light', serif;
+	font-size: 22px;
+	font-weight: normal;
+}
+
+p {
+	margin-bottom: 2em;
+}
+
+.range-container {
+	display: block;
+	margin: 1em auto 3em;
+	font-size: 0.65em;
+	background-color: #ececec;
+	border-radius: 3px;
+	border: 1px solid #dddddd;
+	padding: 20px;
+	width: 500px;
+	font-family: menlo, 'Courier new';
+}
+
+input[type=range] {
+	width: 100%;
+}
+
+.setting {
+	width: 250px;
+	position: relative;
+	margin: 1em auto;
+}
+
+.setting input {
+	display: block;
+	width: 250px;
+	line-height: 20px;
+	margin: 1em auto;
+	font-size: 1.7em;
+	box-shadow: none;
+	text-align: right;
+	background-color: #ececec;
+	border-radius: 3px;
+	border: 1px solid #dddddd;
+}
+
+.setting label {
+	opacity: 0.7;
+	line-height: 20px;
+	font-size: 1.2em;
+	display: block;
+	position: absolute;
+	margin: 0.4em 0 0 0.5em;
+	left: 0;
+}
+
+input:focus {
+	outline: none;
+}

@@ -1,0 +1,58 @@
+{
+  "name": "value-chase",
+  "version": "1.0.0",
+  "description": "Creates a value chase incorporating an ease and friction.",
+  "author": "Tyler Peterson <tylerjpeterson@gmail.com>",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "mkdir -p coverage && browserify -t [ babelify ] -p tape-istanbul/plugin test/spec/test.js | browser-run | tape-istanbul --output coverage/coverage.json && npm run report",
+    "report": "istanbul report --root coverage lcov && open coverage/lcov-report/index.html",
+    "test": "browserify -t [ babelify ] test/spec/test.js | browser-run | tap-spec",
+    "demo": "browserify -t [ babelify ] test/examples/js/demo.js -o tmp/demo.js",
+    "lint": "xo *.js test/**/*.js test/examples/**/*.js || true",
+    "docs": "jsdoc index.js -p -d docs/"
+  },
+  "dependencies": {
+    "events": "^3.0.0",
+    "ticker-js": "^1.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babelify": "^10.0.0",
+    "browser-run": "^6.0.0",
+    "browserify": "^16.5.0",
+    "browserify-istanbul": "^3.0.1",
+    "istanbul": "^0.4.5",
+    "jsdoc": "^3.6.3",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.11.0",
+    "tape-istanbul": "^1.2.0",
+    "xo": "^0.24.0"
+  },
+  "bugs": {
+    "url": "https://github.com/tylerjpeterson/value-chase/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tylerjpeterson/value-chase"
+  },
+  "homepage": "https://github.com/tylerjpeterson/value-chase",
+  "contributors": [
+    ""
+  ],
+  "xo": {
+    "globals": [
+      "document",
+      "window"
+    ]
+  },
+  "keywords": [
+    "EventEmitter",
+    "chase",
+    "value",
+    "smooth",
+    "friction"
+  ],
+  "license": "MIT"
+}

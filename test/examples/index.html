@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>ValueChase</title>
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+	<h1>ValueChase</h1>
+
+	<div class="setting">
+		<label for="tolerance">curve tolerance</label>
+		<input id="tolerance" type="number" min="1" max="10" value="4">
+	</div>
+
+	<div class="setting">
+		<label for="friction">curve friction</label>
+		<input id="friction" type="number" min="1" max="50" value="10">
+	</div>
+
+	<h2>target value</h2>
+	<div class="range-container raw">
+		<input class="range raw-range" type="range" min="0" max="1" step="0.001" value="0"/>
+	</div>
+
+	<h2>current value</h2>
+	<div class="range-container eased">
+		<input class="range eased-range" disabled type="range" min="0" max="1" step="0.001" value="0"/>
+	</div>
+
+	<script src="../../tmp/demo.js"></script>
+</body>
+</html>

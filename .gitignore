@@ -1,0 +1,16 @@
+*.sublime*
+.DS_Store
+.grunt
+.gitconfig
+.sass-cache
+.idea
+_SpecRunner.html
+build
+node_modules
+npm-debug.log
+tag.prop
+temp/
+coverage/
+docs/
+tmp/
+.env
