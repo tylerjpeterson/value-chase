@@ -1,6 +1,6 @@
 {
   "name": "value-chase",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Creates a value chase incorporating an ease and friction.",
   "author": "Tyler Peterson <tylerjpeterson@gmail.com>",
   "main": "index.js",
