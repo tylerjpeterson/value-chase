@@ -14,8 +14,6 @@ tape('should be a constructor', assert => {
 });
 
 tape('should fire render method', assert => {
-	assert.plan(1);
-
 	const chaser = new ValueChase();
 	chaser.on('render', () => {
 		assert.pass('Render event fired.');
@@ -26,8 +24,6 @@ tape('should fire render method', assert => {
 });
 
 tape('should fire update method', assert => {
-	assert.plan(1);
-
 	const chaser = new ValueChase();
 	chaser.on('update', () => {
 		assert.pass('Update event fired.');
@@ -38,8 +34,6 @@ tape('should fire update method', assert => {
 });
 
 tape('should stop when stopped', assert => {
-	assert.plan(1);
-
 	const chaser = new ValueChase();
 	chaser.on('update', () => {
 		chaser.stop();
@@ -51,8 +45,6 @@ tape('should stop when stopped', assert => {
 });
 
 tape('should run when started', assert => {
-	assert.plan(1);
-
 	const chaser = new ValueChase();
 	chaser.on('update', () => {
 		assert.equal(chaser.isRunning(), true);
@@ -63,8 +55,6 @@ tape('should run when started', assert => {
 });
 
 tape('should not have properties after being destroyed', assert => {
-	assert.plan(1);
-
 	const chaser = new ValueChase();
 	chaser.on('update', () => {
 		chaser.destroy();
@@ -76,14 +66,13 @@ tape('should not have properties after being destroyed', assert => {
 });
 
 tape('should update targetValue based on initial option', assert => {
-	assert.plan(1);
 	const chaser = new ValueChase({max: 1, initial: 2});
 	chaser.start();
 	assert.equal(chaser._targetValue, 1);
+	assert.end();
 });
 
 tape('should emit destroyed when destroyed', assert => {
-	assert.plan(1);
 	const chaser = new ValueChase({initial: 0.5});
 	setTimeout(() => {
 		assert.equal(chaser.isRunning(), true);
@@ -94,7 +83,6 @@ tape('should emit destroyed when destroyed', assert => {
 });
 
 tape('should update friction when set', assert => {
-	assert.plan(1);
 	const chaser = new ValueChase();
 	chaser.start();
 	chaser.setFriction(10);
@@ -103,7 +91,6 @@ tape('should update friction when set', assert => {
 });
 
 tape('should apply ease when set', assert => {
-	assert.plan(1);
 	const ease = function (t, b, c, d) {
 		t /= d;
 		return (-c * (Math.sqrt(1 - (t * t)) - 1)) + b;
@@ -117,8 +104,47 @@ tape('should apply ease when set', assert => {
 	chaser.start();
 });
 
+tape('`setValue` should immediately update current value when called', assert => {
+	const ease = function (t, b, c, d) {
+		t /= d;
+		return (-c * (Math.sqrt(1 - (t * t)) - 1)) + b;
+	};
+
+	const chaser = new ValueChase({max: 10, initial: 1, ease});
+	chaser.start();
+	setTimeout(() => {
+		chaser.on('render', evt => {
+			assert.equal(evt.progress, 5);
+			assert.end();
+		});
+		chaser.setValue(5);
+	}, 100);
+});
+
+tape('when false, idle option should prevent ticker from pausing', {timeout: 500}, assert => {
+	const ease = function (t, b, c, d) {
+		t /= d;
+		return (-c * (Math.sqrt(1 - (t * t)) - 1)) + b;
+	};
+
+	const chaser = new ValueChase({idle: false, ease});
+	let time = null;
+
+	chaser._ticker.once('render', e => {
+		time = e.time;
+	});
+
+	chaser.start();
+	chaser.setProgress(1);
+	setTimeout(() => {
+		chaser._ticker.once('render', e => {
+			assert.notEqual(e.time, time);
+			assert.end();
+		});
+	}, 250);
+});
+
 tape('should emit destroyed when destroyed', assert => {
-	assert.plan(1);
 	const ease = function (t, b, c, d) {
 		t /= d;
 		return (-c * (Math.sqrt(1 - (t * t)) - 1)) + b;

@@ -50,6 +50,7 @@ Methods that accept parameters always expect numeric values.
 | `ValueChase.start()` | Starts the internal `ticker-js` instance and begins calculating the current value. |
 | `ValueChase.stop()` | Stops the internal `ticker-js` instance and pauses calculating current value. Also stops all events from being emitted. |
 | `ValueChase.isRunning()` | Whether or not the instance is currently stopped. |
+| `ValueChase.setValue(number)` | Immediately jump to the provided value and force a render. |
 | `ValueChase.setProgress(number)` | This is how we pass a target value to the motion curve calculator. This is often what needs to be overwritten if you have coordinate or vector values to update. |
 | `ValueChase.setFriction(number)` | Set friction used by calculator. |
 | `ValueChase.setTolerance(number)` | Set the specificity requirements necessary to indicate when value has reached target. |

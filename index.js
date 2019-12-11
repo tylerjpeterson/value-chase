@@ -25,16 +25,18 @@ class ValueChase extends EventEmitter {
 			...options
 		};
 
+		this._ticker = null;
+		this._running = false;
 		this._tolerance = null;
 		this._targetVal = null;
+		this._lastEvent = null;
 		this._currentVal = null;
 		this._currentRaw = null;
 		this._needsUpdate = false;
 		this._needsChange = false;
-		this._running = false;
-		this._ticker = null;
 
 		for (const x in mergedOptions) {
+			/* istanbul ignore else */
 			if (Object.prototype.hasOwnProperty.call(mergedOptions, x)) {
 				this[`_${x}`] = mergedOptions[x];
 			}
@@ -47,18 +49,21 @@ class ValueChase extends EventEmitter {
 
 	/**
 	 * Start the ticker / broadcasting of events
+	 * @param  {Number} initial - optional initial value
 	 */
-	start() {
+	start(initial) {
+		initial = initial || this._initial || null;
+
+		/* istanbul ignore else */
 		if (this._ticker && !this._running) {
 			this._bindListeners();
 			this._ticker.start();
 			this._running = true;
 
-			if (this._initial === null) {
+			if (initial === null) {
 				this.setProgress(0);
 			} else {
-				this.setProgress(this._initial);
-				this._initial = null;
+				this.setProgress(initial);
 			}
 		}
 	}
@@ -67,6 +72,7 @@ class ValueChase extends EventEmitter {
 	 * Stop the ticker / broadcasting of events
 	 */
 	stop() {
+		/* istanbul ignore else */
 		if (this._ticker && this._running) {
 			this._unbindListeners();
 			this._running = false;
@@ -118,6 +124,19 @@ class ValueChase extends EventEmitter {
 	}
 
 	/**
+	 * Immediately jump to the provided value and force a render
+	 * @param {Number} val - progress value
+	 */
+	setValue(val) {
+		this._targetVal = val;
+		this._currentVal = val;
+		this._currentRaw = val;
+		this._needsUpdate = false;
+		this._needsChange = true;
+		this._onRender(this._lastEvent);
+	}
+
+	/**
 	 * Destroy the instance.
 	 */
 	destroy() {
@@ -158,6 +177,7 @@ class ValueChase extends EventEmitter {
 	 * @param  {Object} evt - Ticker event data
 	 */
 	_updateValue(evt) {
+		this._lastEvent = evt;
 		let easedVelocity = 1;
 		let fpsCoefficent = 1;
 
